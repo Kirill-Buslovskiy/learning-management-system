@@ -1,4 +1,9 @@
 package com.project.pet.entity.DTO.teacher;
 
-public class TeacherDTO {
+public record TeacherDTO(
+
+        String firstName,
+
+        String surname
+) {
 }

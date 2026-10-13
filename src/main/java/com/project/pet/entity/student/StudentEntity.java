@@ -2,9 +2,10 @@ package com.project.pet.entity.student;
 
 import com.project.pet.entity.group.GroupEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -14,10 +15,9 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-public class Student {
+public class StudentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "student_id")
     private UUID id;
 
     @Column(name = "student_name")
@@ -27,5 +27,12 @@ public class Student {
     private String studentSurname;
 
     @Column(name = "student_groups")
-    private List<GroupEntity> groups;
+    @ManyToMany
+    @JoinTable(
+            name = "student_courses",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id")
+    )
+    @NotNull(message = "Student must be a member of at least one group!")
+    private Set<GroupEntity> groups;
 }

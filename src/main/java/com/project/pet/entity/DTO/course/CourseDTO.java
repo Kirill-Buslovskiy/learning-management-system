@@ -1,4 +1,9 @@
 package com.project.pet.entity.DTO.course;
 
-public class CourseDTO {
+public record CourseDTO(
+
+        String courseName,
+
+        String description
+) {
 }

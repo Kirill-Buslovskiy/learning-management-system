@@ -1,5 +1,6 @@
 package com.project.pet.learning_management_system;
 
+import com.project.pet.LearningManagementSystemApplication;
 import org.springframework.boot.SpringApplication;
 
 public class TestLearningManagementSystemApplication {

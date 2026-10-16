@@ -23,7 +23,7 @@ public class GroupEntity {
     @ToString.Exclude
     private final Set<StudentEntity> studentsInGroup = new HashSet<>();
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
     @Column(name = "name")

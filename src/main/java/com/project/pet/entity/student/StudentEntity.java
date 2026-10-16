@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ import java.util.UUID;
 public class StudentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private UUID id;
 
     @Column(name = "student_name")
@@ -26,13 +28,13 @@ public class StudentEntity {
     @Column(name = "student_surname")
     private String studentSurname;
 
-    @Column(name = "student_groups")
     @ManyToMany
     @JoinTable(
-            name = "student_courses",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "group_id")
+            name = "students_in_group",
+            joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id")
     )
     @NotNull(message = "Student must be a member of at least one group!")
-    private Set<GroupEntity> groups;
+    @ToString.Exclude
+    private final Set<GroupEntity> groups = new HashSet<>();
 }

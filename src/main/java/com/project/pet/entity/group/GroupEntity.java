@@ -4,6 +4,7 @@ import com.project.pet.entity.student.StudentEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -17,13 +18,17 @@ import java.util.UUID;
 public class GroupEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private UUID id;
 
-    @Column(name = "group_name")
+    @Column(name = "name")
     private String groupName;
 
-    @Column(name = "group_students")
-    @ManyToMany(mappedBy = "groups")
-    private Set<StudentEntity> studentsInGroup;
+    @ManyToMany
+    @JoinTable(name = "students_in_group",
+    joinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"))
+    @ToString.Exclude
+    private final Set<StudentEntity> studentsInGroup =  new HashSet<>();
 
 }

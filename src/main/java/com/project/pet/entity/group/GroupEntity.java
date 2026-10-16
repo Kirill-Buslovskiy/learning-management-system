@@ -16,19 +16,17 @@ import java.util.UUID;
 @AllArgsConstructor
 @ToString
 public class GroupEntity {
+    @ManyToMany
+    @JoinTable(name = "students_in_group",
+            joinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"))
+    @ToString.Exclude
+    private final Set<StudentEntity> studentsInGroup = new HashSet<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private UUID id;
-
     @Column(name = "name")
     private String groupName;
-
-    @ManyToMany
-    @JoinTable(name = "students_in_group",
-    joinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"))
-    @ToString.Exclude
-    private final Set<StudentEntity> studentsInGroup =  new HashSet<>();
 
 }

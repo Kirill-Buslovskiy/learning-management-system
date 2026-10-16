@@ -2,11 +2,11 @@ package com.project.pet.entity.schedule;
 
 import com.project.pet.entity.course.CourseEntity;
 import com.project.pet.entity.group.GroupEntity;
-import com.project.pet.entity.teacher.TeacherEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -20,20 +20,18 @@ import java.util.UUID;
 public class ScheduleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private UUID id;
 
+    @ManyToOne
+    private GroupEntity group;
 
-    private Set<GroupEntity> groupSet;
-
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(
-            name = "teacher_id", unique = true)
-    private TeacherEntity teacher;
-
-
-    @OneToOne(mappedBy = "teacher")
-    private CourseEntity course;
+    @ManyToMany
+    @JoinTable(name = "schedule_of_courses",
+    joinColumns = @JoinColumn(name = "schedule_id", referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"))
+    @ToString.Exclude
+    private final Set<CourseEntity> courses = new HashSet<>();
 
 
     private LocalDateTime dateStartLesson;

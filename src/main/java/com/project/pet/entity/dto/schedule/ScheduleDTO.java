@@ -1,19 +1,18 @@
-package com.project.pet.entity.DTO.schedule;
+package com.project.pet.entity.dto.schedule;
 
 import com.project.pet.entity.course.CourseEntity;
 import com.project.pet.entity.group.GroupEntity;
-import com.project.pet.entity.teacher.TeacherEntity;
 
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 public record ScheduleDTO(
+        UUID id,
 
-        Set<GroupEntity> groupSet,
+        GroupEntity group,
 
-        TeacherEntity teacher,
-
-        CourseEntity course,
+        Set<CourseEntity> courses,
 
         LocalDateTime dateStartLesson,
 

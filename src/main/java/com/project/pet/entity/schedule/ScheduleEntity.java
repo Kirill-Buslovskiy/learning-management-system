@@ -18,22 +18,18 @@ import java.util.UUID;
 @Setter
 @ToString
 public class ScheduleEntity {
+    @ManyToMany
+    @JoinTable(name = "schedule_of_courses",
+            joinColumns = @JoinColumn(name = "schedule_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"))
+    @ToString.Exclude
+    private final Set<CourseEntity> courses = new HashSet<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private UUID id;
-
     @ManyToOne
     private GroupEntity group;
-
-    @ManyToMany
-    @JoinTable(name = "schedule_of_courses",
-    joinColumns = @JoinColumn(name = "schedule_id", referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"))
-    @ToString.Exclude
-    private final Set<CourseEntity> courses = new HashSet<>();
-
-
     private LocalDateTime dateStartLesson;
 
 

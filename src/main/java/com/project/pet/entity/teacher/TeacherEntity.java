@@ -1,8 +1,11 @@
 package com.project.pet.entity.teacher;
 
+import com.project.pet.entity.course.CourseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -15,6 +18,7 @@ import java.util.UUID;
 public class TeacherEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private UUID id;
 
     @Column(name = "teacher_name")
@@ -22,4 +26,8 @@ public class TeacherEntity {
 
     @Column(name = "teacher_surname")
     private String surname;
+
+    @OneToMany
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
+    private final Set<CourseEntity> courses = new HashSet<>();
 }

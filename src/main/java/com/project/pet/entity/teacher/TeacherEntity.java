@@ -20,7 +20,7 @@ public class TeacherEntity {
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     private final Set<CourseEntity> courses = new HashSet<>();
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
     @Column(name = "teacher_name")

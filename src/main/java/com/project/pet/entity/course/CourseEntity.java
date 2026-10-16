@@ -24,7 +24,7 @@ public class CourseEntity {
     @ToString.Exclude
     private final Set<ScheduleEntity> schedules = new HashSet<>();
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
     @Column(name = "course_name")

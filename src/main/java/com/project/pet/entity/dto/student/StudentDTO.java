@@ -1,15 +1,18 @@
-package com.project.pet.entity.DTO.student;
+package com.project.pet.entity.dto.student;
 
 import com.project.pet.entity.group.GroupEntity;
 
 import java.util.Set;
+import java.util.UUID;
 
 public record StudentDTO(
+
+        UUID id,
 
         String studentName,
 
         String studentSurname,
 
         Set<GroupEntity> groups
-        ) {
+) {
 }

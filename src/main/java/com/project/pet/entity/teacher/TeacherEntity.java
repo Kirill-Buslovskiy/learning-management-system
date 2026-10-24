@@ -27,4 +27,9 @@ public class TeacherEntity {
     private String firstName;
     @Column(name = "teacher_surname")
     private String surname;
+
+    public void addCourse(CourseEntity course) {
+        courses.add(course);
+        course.setTeacher(this);
+    }
 }

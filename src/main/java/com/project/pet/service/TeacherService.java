@@ -43,7 +43,7 @@ public class TeacherService {
     @Transactional
     public void deleteTeacherById(UUID id) {
         teacherRepo.deleteById(id);
-}
+    }
 
     @Transactional
     public CourseEntity addTeacherToCourse(UUID teacherId, UUID courseId) {

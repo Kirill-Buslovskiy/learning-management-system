@@ -38,11 +38,4 @@ public class StudentService {
     public void deleteStudentById(UUID id) {
         studentRepo.deleteById(id);
     }
-
-    @Transactional
-    public void deleteStudent(StudentDTO studentDto) {
-        studentRepo.delete(studentMapper.toEntity(studentDto));
-    }
-
-
 }

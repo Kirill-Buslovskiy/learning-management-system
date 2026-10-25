@@ -1,5 +1,7 @@
 package com.project.pet.controller;
 
+import com.project.pet.entity.dto.group.GroupDTO;
+import com.project.pet.entity.group.GroupEntity;
 import com.project.pet.entity.schedule.ScheduleEntity;
 import com.project.pet.service.GroupService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,21 @@ public class GroupController {
 
     private final GroupService groupService;
 
+
+    @PutMapping("/add")
+    public GroupEntity addGroup(@RequestBody GroupDTO groupDTO) {
+        return groupService.addGroup(groupDTO);
+    }
+
+    @PutMapping("/update/{groupId}")
+    public GroupEntity updateGroup(@PathVariable UUID groupId, @RequestBody GroupDTO groupDTO) {
+        return groupService.updateGroup(groupId, groupDTO);
+    }
+
+    @PutMapping("/delete/{groupId}")
+    public void deleteGroup(@PathVariable UUID groupId) {
+        groupService.deleteGroupById(groupId);
+    }
 
     @PutMapping("/add-time-lesson/{groupId}/schedule/{scheduleId}")
     public void addTimeOfLessonForGroup(@PathVariable UUID groupId,

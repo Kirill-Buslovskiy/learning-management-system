@@ -2,6 +2,7 @@ package com.project.pet.repository;
 
 import com.project.pet.entity.schedule.ScheduleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -19,10 +20,17 @@ public interface ScheduleRepo extends JpaRepository<ScheduleEntity, UUID> {
     ScheduleEntity viewCourseScheduleForGroup(UUID groupId);
 
     @Query(value = "UPDATE ScheduleEntity se SET se.dateStartLesson = :startLesson, se.dateEndLesson = :endndLesson WHERE se.group.id = :groupId")
+    @Modifying
     ScheduleEntity updateDateLessonForGroup(@Param("groupId") UUID groupId,
                                             @Param("startLesson") LocalDateTime startLesson,
                                             @Param("endLesson") LocalDateTime endLesson);
 
     @Query(value = "UPDATE FROM ScheduleEntity se SET se.dateStartLesson = NULL, se.dateEndLesson = NULL WHERE se.group.id = :groupId")
-    ScheduleEntity deleteDateLessonForGroup(@Param("groupId") UUID groupId);
+    @Modifying
+    void deleteDateLessonForGroup(@Param("groupId") UUID groupId);
+
+
+    @Query(value = "DELETE ScheduleEntity se WHERE se.dateEndLesson > :now")
+    @Modifying
+    void cleanScheduleAfterYear(@Param("now") LocalDateTime now);
 }

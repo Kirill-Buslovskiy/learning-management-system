@@ -47,11 +47,6 @@ public class GroupService {
     }
 
     @Transactional
-    public void deleteGroup(GroupDTO groupDTO) {
-        groupRepo.delete(groupMapper.toEntity(groupDTO));
-    }
-
-    @Transactional
     public void addStudentToGroup(UUID studentId, UUID groupId) {
         StudentEntity student = getStudent(studentId);
 

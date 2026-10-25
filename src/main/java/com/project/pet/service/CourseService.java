@@ -44,11 +44,6 @@ public class CourseService {
         courseRepo.deleteById(id);
     }
 
-    @Transactional
-    public void deleteCourse(CourseDTO courseDTO) {
-        courseRepo.delete(courseMapper.toEntity(courseDTO));
-    }
-
 
     @Transactional
     public void addGroupsToCourses(UUID groupId, UUID coursesId) {

@@ -1,6 +1,6 @@
 spring:
+  profiles:
+    active: dev
+
   application:
     name: learning-management-system
-schedule:
-  cleanup:
-    cron: "0 0 0 1 1 *"

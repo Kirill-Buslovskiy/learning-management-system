@@ -14,7 +14,7 @@ public class ScheduleCleaner {
 
     private final ScheduleRepo scheduleRepo;
 
-    @Scheduled(cron = "${Schedule.cleanup.cron}")
+    @Scheduled(cron = "${schedule.cleanup.cron}")
     public void cleanSchedules() {
         Instant now = Instant.from(LocalDateTime.now());
 

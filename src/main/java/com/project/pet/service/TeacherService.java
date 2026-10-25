@@ -43,12 +43,7 @@ public class TeacherService {
     @Transactional
     public void deleteTeacherById(UUID id) {
         teacherRepo.deleteById(id);
-    }
-
-    @Transactional
-    public void deleteTeacher(TeacherDTO teacherDTO) {
-        teacherRepo.delete(teacherMapper.toEntity(teacherDTO));
-    }
+}
 
     @Transactional
     public CourseEntity addTeacherToCourse(UUID teacherId, UUID courseId) {

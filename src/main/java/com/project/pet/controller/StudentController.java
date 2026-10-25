@@ -25,7 +25,7 @@ public class StudentController {
         return studentService.updateStudent(studentId, studentDTO);
     }
 
-    @DeleteMapping("/delete-student/{studentId")
+    @DeleteMapping("/delete-student/{studentId}")
     public void deleteStudent(@PathVariable UUID studentId) {
         studentService.deleteStudentById(studentId);
     }

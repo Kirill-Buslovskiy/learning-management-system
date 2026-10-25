@@ -1,7 +1,6 @@
 package com.project.pet.component;
 
 import com.project.pet.repository.ScheduleRepo;
-import com.project.pet.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

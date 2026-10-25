@@ -33,6 +33,12 @@ public class GroupController {
         groupService.deleteGroupById(groupId);
     }
 
+    @PutMapping("/add/{groupId}/student/{studentId}")
+    public void addStudentToGroup(@PathVariable UUID studentId,
+                                  @PathVariable UUID groupId) {
+        groupService.addStudentToGroup(studentId, groupId);
+    }
+
     @PutMapping("/add-time-lesson/{groupId}/schedule/{scheduleId}")
     public void addTimeOfLessonForGroup(@PathVariable UUID groupId,
                                         @PathVariable UUID scheduleId,

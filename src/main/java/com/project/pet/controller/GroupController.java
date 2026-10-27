@@ -4,6 +4,9 @@ import com.project.pet.entity.dto.group.GroupDTO;
 import com.project.pet.entity.group.GroupEntity;
 import com.project.pet.entity.schedule.ScheduleEntity;
 import com.project.pet.service.GroupService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/group")
+@Tag(name = "Groups", description = "Control of group")
 @RequiredArgsConstructor
 public class GroupController {
 
@@ -19,29 +23,35 @@ public class GroupController {
 
 
     @PutMapping("/add")
+    @Operation(summary = "Add group on site")
     public GroupEntity addGroup(@RequestBody GroupDTO groupDTO) {
         return groupService.addGroup(groupDTO);
     }
 
     @PutMapping("/update/{groupId}")
-    public GroupEntity updateGroup(@PathVariable UUID groupId, @RequestBody GroupDTO groupDTO) {
+    @Operation(summary = "Update group by id")
+    public GroupEntity updateGroup(@PathVariable @Parameter(name = "groupId") UUID groupId,
+                                   @RequestBody GroupDTO groupDTO) {
         return groupService.updateGroup(groupId, groupDTO);
     }
 
     @PutMapping("/delete/{groupId}")
-    public void deleteGroup(@PathVariable UUID groupId) {
+    @Operation(summary = "Delete group by id")
+    public void deleteGroup(@PathVariable @Parameter(name = "groupId") UUID groupId) {
         groupService.deleteGroupById(groupId);
     }
 
     @PutMapping("/add/{groupId}/student/{studentId}")
-    public void addStudentToGroup(@PathVariable UUID studentId,
-                                  @PathVariable UUID groupId) {
+    @Operation(summary = "Add student with id to group by id")
+    public void addStudentToGroup(@PathVariable @Parameter(name = "studentId") UUID studentId,
+                                  @PathVariable @Parameter(name = "groupId") UUID groupId) {
         groupService.addStudentToGroup(studentId, groupId);
     }
 
     @PutMapping("/add-time-lesson/{groupId}/schedule/{scheduleId}")
-    public void addTimeOfLessonForGroup(@PathVariable UUID groupId,
-                                        @PathVariable UUID scheduleId,
+    @Operation(summary = "Add schedule lesson for group")
+    public void addTimeOfLessonForGroup(@PathVariable @Parameter(name = "groupId") UUID groupId,
+                                        @PathVariable @Parameter(name = "groupId") UUID scheduleId,
                                         @RequestBody LocalDateTime startLesson,
                                         @RequestBody LocalDateTime endLesson) {
 
@@ -49,13 +59,15 @@ public class GroupController {
     }
 
     @GetMapping("/view-schedule-of-group/{groupId}")
-    public ScheduleEntity viewScheduleOfGroup(@PathVariable UUID groupId) {
+    @Operation(summary = "Get view schedule of group by id")
+    public ScheduleEntity viewScheduleOfGroup(@PathVariable @Parameter(name = "groupId") UUID groupId) {
 
         return groupService.viewScheduleForGroup(groupId);
     }
 
     @PutMapping("/update-course-time-of-group/{groupId}")
-    public ScheduleEntity updateCourseTimeForGroup(@PathVariable UUID groupId,
+    @Operation(summary = "Update course schedule for group by groupId")
+    public ScheduleEntity updateCourseTimeForGroup(@PathVariable @Parameter(name = "groupId") UUID groupId,
                                                    @RequestBody LocalDateTime startLesson,
                                                    @RequestBody LocalDateTime endLesson) {
 
@@ -63,7 +75,8 @@ public class GroupController {
     }
 
     @PutMapping("/delete-course-schedule-for-group/{groupId}")
-    public void deleteCourseScheduleForGroup(@PathVariable UUID groupId) {
+    @Operation(summary = "Delete course schedule for group by groupId")
+    public void deleteCourseScheduleForGroup(@PathVariable @Parameter(name = "groupId") UUID groupId) {
 
         groupService.deleteScheduleForGroup(groupId);
     }

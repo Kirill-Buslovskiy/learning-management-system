@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3-create-courses
+      author: Kirill Buslovskii
+
+      changes:
+        - createTable:
+            tableName: course
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: course_name
+                  type: VARCHAR
+              - column:
+                  name: description
+                  type: VARCHAR
+              - column:
+                  name: teacher_id
+                  type: UUID

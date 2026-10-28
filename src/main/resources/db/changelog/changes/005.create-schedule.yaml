@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1-create-schedule
+      author: Kirill Buslovskii
+      changes:
+
+
+
+
+
+
+        - createTable:
+            tableName: schedule
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: group_id
+                  type: UUID
+              - column:
+                  name: dateStartLesson
+                  type: TIMESTAMP
+              - column:
+                  name: dateEndLesson
+                  type: TIMESTAMP
+              - column:
+                  name: course_id
+                  type: UUID
+
+

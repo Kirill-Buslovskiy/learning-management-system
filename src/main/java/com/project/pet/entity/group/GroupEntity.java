@@ -31,7 +31,7 @@ public class GroupEntity {
     @ToString.Exclude
     private final Set<StudentEntity> studentsInGroup = new HashSet<>();
 
-    @ManyToMany(mappedBy = "groupOnCourses")
+    @ManyToMany(mappedBy = "groups_in_courses")
     @ToString.Exclude
     private final Set<CourseEntity> courses = new HashSet<>();
 

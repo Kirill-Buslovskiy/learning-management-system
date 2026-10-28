@@ -16,17 +16,20 @@ import java.util.UUID;
 @Setter
 @ToString
 public class TeacherEntity {
-    @OneToMany
-    @JoinColumn(name = "course_id", referencedColumnName = "id")
-    private final Set<CourseEntity> courses = new HashSet<>();
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
+
     @Column(name = "teacher_name")
     private String firstName;
+
     @Column(name = "teacher_surname")
     private String surname;
+
+    @OneToMany(mappedBy = "teacher")
+    private final Set<CourseEntity> courses = new HashSet<>();
 
     public void addCourse(CourseEntity course) {
         courses.add(course);

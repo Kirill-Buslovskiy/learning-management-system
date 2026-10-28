@@ -40,8 +40,7 @@ public class CourseEntity {
     @ToString.Exclude
     private final Set<GroupEntity> groupOnCourses = new HashSet<>();
 
-    @OneToMany
-    @JoinColumn(name = "schedule_id", referencedColumnName = "id")
+    @OneToMany(mappedBy = "course")
     @ToString.Exclude
 private final Set<ScheduleEntity> schedulesForCourses = new HashSet<>();
 

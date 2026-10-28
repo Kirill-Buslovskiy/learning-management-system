@@ -22,6 +22,8 @@ public class ScheduleEntity {
     private UUID id;
 
     @ManyToOne
+    @JoinColumn(name = "group_id", referencedColumnName = "id")
+    @ToString.Exclude
     private GroupEntity group;
 
     private LocalDateTime dateStartLesson;

@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2-create-group
+      author: Kirill Buslovskii
+
+      changes:
+        - createTable:
+            tableName: group
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR

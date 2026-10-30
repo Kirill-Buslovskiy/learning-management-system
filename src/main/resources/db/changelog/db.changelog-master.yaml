@@ -1,25 +1,17 @@
 databaseChangeLog:
   - include:
-      path: db/changelog/changes/
-      file: 001.create-teachers.yaml
+      file: db/changelog/changes/001.create-teachers.yaml
   - include:
-      path: db/changelog/changes/
-      file: 002.create-group.yaml
+      file: db/changelog/changes/002.create-group.yaml
   - include:
-      path: db/changelog/changes/
-      file: 003.create-student.yaml
+      file: db/changelog/changes/003.create-student.yaml
   - include:
-      path: db/changelog/changes/
-      file: 004.create-courses.yaml
+      file: db/changelog/changes/004.create-courses.yaml
   - include:
-      path: db/changelog/changes/
-      file: 005.create-schedule.yaml
+      file: db/changelog/changes/005.create-schedule.yaml
   - include:
-      path: db/changelog/changes/
-      file: 006.create-students-in-group.yaml
+      file: db/changelog/changes/006.create-students-in-group.yaml
   - include:
-      path: db/changelog/changes/
-      file: 007.create-groups-in-courses.yaml
+      file: db/changelog/changes/007.create-groups-in-courses.yaml
   - include:
-      path: db/changelog/changes/
-      file: 008.add-foreign-keys.yaml
+      file: db/changelog/changes/008.add-foreign-keys.yaml

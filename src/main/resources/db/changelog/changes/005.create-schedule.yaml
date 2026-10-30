@@ -1,14 +1,8 @@
 databaseChangeLog:
   - changeSet:
-      id: 1-create-schedule
+      id: 5-create-schedule
       author: Kirill Buslovskii
       changes:
-
-
-
-
-
-
         - createTable:
             tableName: schedule
             columns:
@@ -22,10 +16,10 @@ databaseChangeLog:
                   name: group_id
                   type: UUID
               - column:
-                  name: dateStartLesson
+                  name: date_start_lesson
                   type: TIMESTAMP
               - column:
-                  name: dateEndLesson
+                  name: date_end_lesson
                   type: TIMESTAMP
               - column:
                   name: course_id

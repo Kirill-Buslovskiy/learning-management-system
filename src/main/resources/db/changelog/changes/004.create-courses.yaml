@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 3-create-courses
+      id: 4-create-courses
       author: Kirill Buslovskii
 
       changes:

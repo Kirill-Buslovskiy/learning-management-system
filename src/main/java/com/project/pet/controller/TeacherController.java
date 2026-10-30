@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -50,7 +51,9 @@ public class TeacherController {
 
     @GetMapping("/view-schedule/{teacherId}")
     @Operation(summary = "Get view schedule by teacherId")
-    public ScheduleEntity viewSchedule(@PathVariable @Parameter(name = "teacherId") UUID teacherId) {
-        return teacherService.viewClassScheduleForTeacher(teacherId);
+    public Page<ScheduleEntity> viewSchedule(@PathVariable @Parameter(name = "teacherId") UUID teacherId,
+                                             @RequestParam int page,
+                                             @RequestParam int size) {
+        return teacherService.viewClassScheduleForTeacher(teacherId, 0, 50);
     }
 }

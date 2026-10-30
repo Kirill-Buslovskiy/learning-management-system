@@ -17,17 +17,6 @@ import java.util.UUID;
 @Setter
 @ToString
 public class StudentEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id")
-    private UUID id;
-
-    @Column(name = "student_name")
-    private String studentName;
-
-    @Column(name = "student_surname")
-    private String studentSurname;
-
     @ManyToMany
     @JoinTable(
             name = "students_in_group",
@@ -37,6 +26,14 @@ public class StudentEntity {
     @NotNull(message = "Student must be a member of at least one group!")
     @ToString.Exclude
     private final Set<GroupEntity> groups = new HashSet<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
+    private UUID id;
+    @Column(name = "student_name")
+    private String studentName;
+    @Column(name = "student_surname")
+    private String studentSurname;
 
 
 }

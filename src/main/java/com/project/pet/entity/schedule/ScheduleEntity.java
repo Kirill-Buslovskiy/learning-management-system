@@ -26,9 +26,10 @@ public class ScheduleEntity {
     @ToString.Exclude
     private GroupEntity group;
 
+    @Column(name = "date_start_lesson")
     private LocalDateTime dateStartLesson;
 
-
+    @Column(name = "date_end_lesson")
     private LocalDateTime dateEndLesson;
 
     @ManyToOne

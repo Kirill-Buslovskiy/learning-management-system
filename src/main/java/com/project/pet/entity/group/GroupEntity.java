@@ -18,28 +18,26 @@ import java.util.UUID;
 @AllArgsConstructor
 @ToString
 public class GroupEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id")
-    private UUID id;
-    @Column(name = "name")
-    private String groupName;
     @ManyToMany
     @JoinTable(name = "students_in_group",
             joinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"))
     @ToString.Exclude
     private final Set<StudentEntity> studentsInGroup = new HashSet<>();
-
-    @ManyToMany(mappedBy = "groups_in_courses")
+    @ManyToMany(mappedBy = "groupOnCourses")
     @ToString.Exclude
     private final Set<CourseEntity> courses = new HashSet<>();
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
+    private UUID id;
+    @Column(name = "name")
+    private String groupName;
     @OneToMany(mappedBy = "group")
     @ToString.Exclude
     private Set<ScheduleEntity> schedules = new HashSet<>();
 
-    public void  addStudent(StudentEntity studentEntity) {
+    public void addStudent(StudentEntity studentEntity) {
         studentsInGroup.add(studentEntity);
         studentEntity.getGroups().add(this);
     }

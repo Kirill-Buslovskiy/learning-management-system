@@ -12,6 +12,10 @@ import com.project.pet.repository.GroupRepo;
 import com.project.pet.repository.ScheduleRepo;
 import com.project.pet.repository.StudentRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,8 +76,10 @@ public class GroupService {
     }
 
     @Transactional
-    public ScheduleEntity viewScheduleForGroup(UUID groupId) {
-        return scheduleRepo.viewCourseScheduleForGroup(groupId);
+    public Page<ScheduleEntity> viewScheduleForGroup(UUID groupId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("dateStartLesson").ascending());
+
+        return scheduleRepo.viewCourseScheduleForGroup(groupId, pageable);
     }
 
     @Transactional
@@ -88,7 +94,7 @@ public class GroupService {
 
     private GroupEntity getGroupEntity(UUID groupId) {
         return groupRepo.findById(groupId)
-                .orElseThrow(() -> new GroupNotFoundException("Course with id: " + groupId +" is not found"));
+                .orElseThrow(() -> new GroupNotFoundException("Course with id: " + groupId + " is not found"));
     }
 
     private StudentEntity getStudent(UUID studentId) {

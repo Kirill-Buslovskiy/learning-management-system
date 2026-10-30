@@ -11,6 +11,10 @@ import com.project.pet.repository.CourseRepo;
 import com.project.pet.repository.ScheduleRepo;
 import com.project.pet.repository.TeacherRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,10 +62,10 @@ public class TeacherService {
     }
 
     @Transactional
-    public ScheduleEntity viewClassScheduleForTeacher(UUID teacherId) {
-        return scheduleRepo.viewClassScheduleForTeacher(teacherId);
+    public Page<ScheduleEntity> viewClassScheduleForTeacher(UUID teacherId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("dateStartLesson").ascending());
 
-
+        return scheduleRepo.viewClassScheduleForTeacher(teacherId, pageable);
     }
 
 

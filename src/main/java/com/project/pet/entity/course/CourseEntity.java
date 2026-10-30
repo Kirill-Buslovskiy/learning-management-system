@@ -19,30 +19,25 @@ import java.util.UUID;
 @ToString
 public class CourseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id")
-    private UUID id;
-
-    @Column(name = "course_name")
-    private String courseName;
-
-    private String description;
-
-    @ManyToOne
-    @JoinColumn(name = "teacher_id", referencedColumnName = "id")
-    private TeacherEntity teacher;
-
     @ManyToMany
     @JoinTable(name = "groups_in_courses",
             joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"))
     @ToString.Exclude
     private final Set<GroupEntity> groupOnCourses = new HashSet<>();
-
     @OneToMany(mappedBy = "course")
     @ToString.Exclude
-private final Set<ScheduleEntity> schedulesForCourses = new HashSet<>();
+    private final Set<ScheduleEntity> schedulesForCourses = new HashSet<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
+    private UUID id;
+    @Column(name = "course_name")
+    private String courseName;
+    private String description;
+    @ManyToOne
+    @JoinColumn(name = "teacher_id", referencedColumnName = "id")
+    private TeacherEntity teacher;
 
     public void addGroup(GroupEntity groupEntity) {
         groupOnCourses.add(groupEntity);

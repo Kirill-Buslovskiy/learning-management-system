@@ -1,4 +1,4 @@
-package com.project.pet.entity.dto.course;
+package com.project.pet.dto.course;
 
 import com.project.pet.entity.schedule.ScheduleEntity;
 

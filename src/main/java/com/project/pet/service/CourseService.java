@@ -1,7 +1,7 @@
 package com.project.pet.service;
 
 import com.project.pet.entity.course.CourseEntity;
-import com.project.pet.entity.dto.course.CourseDTO;
+import com.project.pet.dto.course.CourseDTO;
 import com.project.pet.entity.group.GroupEntity;
 import com.project.pet.exceptions.CourseNotFoundException;
 import com.project.pet.exceptions.GroupNotFoundException;

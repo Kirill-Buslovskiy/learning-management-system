@@ -1,7 +1,7 @@
 package com.project.pet.controller;
 
 import com.project.pet.entity.course.CourseEntity;
-import com.project.pet.entity.dto.course.CourseDTO;
+import com.project.pet.dto.course.CourseDTO;
 import com.project.pet.service.CourseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

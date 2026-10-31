@@ -1,4 +1,4 @@
-package com.project.pet.entity.dto.teacher;
+package com.project.pet.dto.teacher;
 
 import com.project.pet.entity.course.CourseEntity;
 

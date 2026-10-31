@@ -1,6 +1,6 @@
 package com.project.pet.service;
 
-import com.project.pet.entity.dto.group.GroupDTO;
+import com.project.pet.dto.group.GroupDTO;
 import com.project.pet.entity.group.GroupEntity;
 import com.project.pet.entity.schedule.ScheduleEntity;
 import com.project.pet.entity.student.StudentEntity;

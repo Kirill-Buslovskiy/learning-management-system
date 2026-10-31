@@ -1,7 +1,7 @@
 package com.project.pet.service;
 
 import com.project.pet.entity.course.CourseEntity;
-import com.project.pet.entity.dto.teacher.TeacherDTO;
+import com.project.pet.dto.teacher.TeacherDTO;
 import com.project.pet.entity.schedule.ScheduleEntity;
 import com.project.pet.entity.teacher.TeacherEntity;
 import com.project.pet.exceptions.CourseNotFoundException;

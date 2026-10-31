@@ -1,6 +1,6 @@
 package com.project.pet.controller;
 
-import com.project.pet.entity.dto.student.StudentDTO;
+import com.project.pet.dto.student.StudentDTO;
 import com.project.pet.entity.student.StudentEntity;
 import com.project.pet.service.StudentService;
 import io.swagger.v3.oas.annotations.Operation;

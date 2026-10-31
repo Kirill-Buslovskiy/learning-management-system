@@ -1,6 +1,6 @@
-package com.project.pet.entity.dto.group;
+package com.project.pet.dto.group;
 
-import com.project.pet.entity.dto.student.StudentDTO;
+import com.project.pet.dto.student.StudentDTO;
 
 import java.util.Set;
 import java.util.UUID;

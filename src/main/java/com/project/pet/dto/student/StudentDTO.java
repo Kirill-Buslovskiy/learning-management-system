@@ -1,4 +1,4 @@
-package com.project.pet.entity.dto.student;
+package com.project.pet.dto.student;
 
 import com.project.pet.entity.group.GroupEntity;
 

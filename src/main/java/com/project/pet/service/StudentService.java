@@ -1,6 +1,6 @@
 package com.project.pet.service;
 
-import com.project.pet.entity.dto.student.StudentDTO;
+import com.project.pet.dto.student.StudentDTO;
 import com.project.pet.entity.student.StudentEntity;
 import com.project.pet.exceptions.StudentNotFoundException;
 import com.project.pet.mapper.StudentMapper;

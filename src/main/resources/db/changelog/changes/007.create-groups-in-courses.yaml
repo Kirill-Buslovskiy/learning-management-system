@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: 7-create-groups-in-courses
+      author: Kirill Buslovskii
+
+      changes:
+        - createTable:
+            tableName: groups_in_courses
+            columns:
+              - column:
+                  name: group_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: course_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+
+        - addPrimaryKey:
+            tableName: groups_in_courses
+            columnNames: group_id, course_id
+            constraintName: pk_groups_in_course

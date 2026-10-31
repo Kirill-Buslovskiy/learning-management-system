@@ -1,6 +1,6 @@
 package com.project.pet.dto.teacher;
 
-import com.project.pet.entity.course.CourseEntity;
+import com.project.pet.dto.course.CourseDTO;
 
 import java.util.Set;
 import java.util.UUID;
@@ -13,6 +13,6 @@ public record TeacherDTO(
 
         String surname,
 
-        Set<CourseEntity> courses
+        Set<CourseDTO> courses
 ) {
 }

@@ -1,6 +1,6 @@
 package com.project.pet.dto.course;
 
-import com.project.pet.entity.schedule.ScheduleEntity;
+import com.project.pet.dto.schedule.ScheduleDTO;
 
 import java.util.Set;
 import java.util.UUID;
@@ -12,6 +12,6 @@ public record CourseDTO(
 
         String description,
 
-        Set<ScheduleEntity> schedules
+        Set<ScheduleDTO> schedules
 ) {
 }

@@ -1,6 +1,6 @@
 package com.project.pet.dto.schedule;
 
-import com.project.pet.entity.course.CourseEntity;
+import com.project.pet.dto.course.CourseDTO;
 import com.project.pet.entity.group.GroupEntity;
 
 import java.time.LocalDateTime;
@@ -12,7 +12,7 @@ public record ScheduleDTO(
 
         GroupEntity group,
 
-        Set<CourseEntity> courses,
+        Set<CourseDTO> courses,
 
         LocalDateTime dateStartLesson,
 

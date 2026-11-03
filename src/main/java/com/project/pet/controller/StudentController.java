@@ -19,22 +19,22 @@ public class StudentController {
 
     private final StudentService studentService;
 
-    @PutMapping("/create-student")
+    @PostMapping("/students")
     @Operation(summary = "Add student on site")
     public StudentEntity createStudent(@RequestBody StudentDTO studentDTO) {
         return studentService.addStudent(studentDTO);
     }
 
-    @PutMapping("/update-student/{studentId}")
+    @PostMapping("/students/{id}")
     @Operation(summary = "Update student by id")
-    public StudentEntity updateStudent(@PathVariable @Parameter(name = "studentId") UUID studentId,
+    public StudentEntity updateStudent(@PathVariable @Parameter(name = "StudentId") UUID id,
                                        @RequestBody StudentDTO studentDTO) {
-        return studentService.updateStudent(studentId, studentDTO);
+        return studentService.updateStudent(id, studentDTO);
     }
 
-    @DeleteMapping("/delete-student/{studentId}")
+    @DeleteMapping("/delete/{id}")
     @Operation(summary = "Delete student by id")
-    public void deleteStudent(@PathVariable @Parameter(name = "studentId") UUID studentId) {
-        studentService.deleteStudentById(studentId);
+    public void deleteStudent(@PathVariable @Parameter(name = "studentId") UUID id) {
+        studentService.deleteStudentById(id);
     }
 }

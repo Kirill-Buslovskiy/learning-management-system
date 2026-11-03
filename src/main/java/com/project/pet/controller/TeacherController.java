@@ -1,7 +1,7 @@
 package com.project.pet.controller;
 
-import com.project.pet.entity.course.CourseEntity;
 import com.project.pet.dto.teacher.TeacherDTO;
+import com.project.pet.entity.course.CourseEntity;
 import com.project.pet.entity.schedule.ScheduleEntity;
 import com.project.pet.entity.teacher.TeacherEntity;
 import com.project.pet.service.TeacherService;
@@ -22,38 +22,36 @@ public class TeacherController {
 
     private final TeacherService teacherService;
 
-    @PutMapping("/create-teacher")
+    @PostMapping("/teachers")
     @Operation(summary = "Add teacher on site")
     public TeacherEntity createTeacher(@RequestBody TeacherDTO teacherDTO) {
         return teacherService.addTeacher(teacherDTO);
     }
 
 
-    @PutMapping("/update-teacher/{teacherId}")
+    @PostMapping("/teachers/{id}")
     @Operation(summary = "Update teacher by id")
-    public TeacherEntity updateTeacher(@PathVariable @Parameter(name = "teacherId") UUID teacherId,
+    public TeacherEntity updateTeacher(@PathVariable @Parameter(name = "teacherId") UUID id,
                                        @RequestBody TeacherDTO teacherDTO) {
-        return teacherService.updateTeacher(teacherId, teacherDTO);
+        return teacherService.updateTeacher(id, teacherDTO);
     }
 
-    @DeleteMapping("/delete-teacher/{teacherId}")
+    @DeleteMapping("/delete/{id}")
     @Operation(summary = "Delete teacher by id")
-    public void deleteTeacher(@PathVariable @Parameter(name = "teacherId") UUID teacherId) {
-        teacherService.deleteTeacherById(teacherId);
+    public void deleteTeacher(@PathVariable @Parameter(name = "teacherId") UUID id) {
+        teacherService.deleteTeacherById(id);
     }
 
-    @PutMapping("/add/{teacherId}/course/{courseId}")
+    @PostMapping("/teachers/{teacherId}/course/{courseId}")
     @Operation(summary = "Add teacher with id to course by id")
     public CourseEntity addTeacherToCourse(@PathVariable @Parameter(name = "teacherId") UUID teacherId,
                                            @PathVariable @Parameter(name = "courseId") UUID courseId) {
         return teacherService.addTeacherToCourse(teacherId, courseId);
     }
 
-    @GetMapping("/view-schedule/{teacherId}")
+    @GetMapping("/schedule/{id}")
     @Operation(summary = "Get view schedule by teacherId")
-    public Page<ScheduleEntity> viewSchedule(@PathVariable @Parameter(name = "teacherId") UUID teacherId,
-                                             @RequestParam int page,
-                                             @RequestParam int size) {
-        return teacherService.viewClassScheduleForTeacher(teacherId, 0, 50);
+    public Page<ScheduleEntity> viewSchedule(@PathVariable @Parameter(name = "teacherId") UUID id) {
+        return teacherService.viewClassScheduleForTeacher(id, 0, 50);
     }
 }

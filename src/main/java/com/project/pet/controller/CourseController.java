@@ -1,7 +1,7 @@
 package com.project.pet.controller;
 
-import com.project.pet.entity.course.CourseEntity;
 import com.project.pet.dto.course.CourseDTO;
+import com.project.pet.entity.course.CourseEntity;
 import com.project.pet.service.CourseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -21,7 +21,7 @@ public class CourseController {
 
     private final CourseService courseService;
 
-    @PutMapping("/add")
+    @PostMapping("/courses")
     @Operation(summary = "Add course on site")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Course is created successfully."),
@@ -33,7 +33,7 @@ public class CourseController {
         return courseService.addCourse(courseDTO);
     }
 
-    @PutMapping("/update-course/{courseId}")
+    @PostMapping("/courses/{id}")
     @Operation(summary = "Update course by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Course is updated successfully."),
@@ -41,12 +41,12 @@ public class CourseController {
             @ApiResponse(responseCode = "404", description = "Course not found."),
             @ApiResponse(responseCode = "500", description = "Something wrong on server.")
     })
-    public CourseEntity updateCourse(@PathVariable @Parameter(name = "courseId") UUID courseId,
+    public CourseEntity updateCourse(@PathVariable @Parameter(name = "courseId") UUID id,
                                      @RequestBody CourseDTO courseDTO) {
-        return courseService.updateCourse(courseId, courseDTO);
+        return courseService.updateCourse(id, courseDTO);
     }
 
-    @PutMapping("/delete-course/{courseId}")
+    @DeleteMapping("/delete/{id}")
     @Operation(summary = "Delete course by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Course deleted successfully."),
@@ -54,11 +54,11 @@ public class CourseController {
             @ApiResponse(responseCode = "404", description = "Course not found."),
             @ApiResponse(responseCode = "500", description = "Something wrong on server.")
     })
-    public void deleteCourseById(@PathVariable @Parameter(name = "courseId") UUID courseId) {
-        courseService.deleteCourseById(courseId);
+    public void deleteCourseById(@PathVariable @Parameter(name = "courseId") UUID id) {
+        courseService.deleteCourseById(id);
     }
 
-    @PutMapping("/add-group/{groupId}/courses/{coursesId}")
+    @PostMapping("/courses/{coursesId}/groups/{groupId}")
     @Operation(summary = "Add groups to course")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Groups added to course successfully."),

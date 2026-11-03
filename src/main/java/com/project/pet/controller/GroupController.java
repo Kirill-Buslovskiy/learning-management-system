@@ -23,33 +23,33 @@ public class GroupController {
     private final GroupService groupService;
 
 
-    @PutMapping("/add")
+    @PostMapping("/groups")
     @Operation(summary = "Add group on site")
     public GroupEntity addGroup(@RequestBody GroupDTO groupDTO) {
         return groupService.addGroup(groupDTO);
     }
 
-    @PutMapping("/update/{groupId}")
+    @PostMapping("/groups/{id}")
     @Operation(summary = "Update group by id")
-    public GroupEntity updateGroup(@PathVariable @Parameter(name = "groupId") UUID groupId,
+    public GroupEntity updateGroup(@PathVariable @Parameter(name = "groupId") UUID id,
                                    @RequestBody GroupDTO groupDTO) {
-        return groupService.updateGroup(groupId, groupDTO);
+        return groupService.updateGroup(id, groupDTO);
     }
 
-    @PutMapping("/delete/{groupId}")
+    @DeleteMapping("/delete/{id}")
     @Operation(summary = "Delete group by id")
-    public void deleteGroup(@PathVariable @Parameter(name = "groupId") UUID groupId) {
-        groupService.deleteGroupById(groupId);
+    public void deleteGroup(@PathVariable @Parameter(name = "groupId") UUID id) {
+        groupService.deleteGroupById(id);
     }
 
-    @PutMapping("/add/{groupId}/student/{studentId}")
+    @PostMapping("/groups/{groupId}/student/{studentId}")
     @Operation(summary = "Add student with id to group by id")
     public void addStudentToGroup(@PathVariable @Parameter(name = "studentId") UUID studentId,
                                   @PathVariable @Parameter(name = "groupId") UUID groupId) {
         groupService.addStudentToGroup(studentId, groupId);
     }
 
-    @PutMapping("/add-time-lesson/{groupId}/schedule/{scheduleId}")
+    @PostMapping("/groups/{groupId}/schedule/{scheduleId}")
     @Operation(summary = "Add schedule lesson for group")
     public void addTimeOfLessonForGroup(@PathVariable @Parameter(name = "groupId") UUID groupId,
                                         @PathVariable @Parameter(name = "groupId") UUID scheduleId,
@@ -59,26 +59,26 @@ public class GroupController {
         groupService.addTimeOfLessonForGroup(groupId, scheduleId, startLesson, endLesson);
     }
 
-    @GetMapping("/view-schedule-of-group/{groupId}")
+    @GetMapping("/schedule/{id}")
     @Operation(summary = "Get view schedule of group by id")
-    public Page<ScheduleEntity> viewScheduleOfGroup(@PathVariable @Parameter(name = "groupId") UUID groupId) {
+    public Page<ScheduleEntity> viewScheduleOfGroup(@PathVariable @Parameter(name = "groupId") UUID id) {
 
-        return groupService.viewScheduleForGroup(groupId, 0, 50);
+        return groupService.viewScheduleForGroup(id, 0, 50);
     }
 
-    @PutMapping("/update-course-time-of-group/{groupId}")
+    @PostMapping("/schedule-for-group/{id}")
     @Operation(summary = "Update course schedule for group by groupId")
-    public ScheduleEntity updateCourseTimeForGroup(@PathVariable @Parameter(name = "groupId") UUID groupId,
+    public ScheduleEntity updateCourseTimeForGroup(@PathVariable @Parameter(name = "groupId") UUID id,
                                                    @RequestBody LocalDateTime startLesson,
                                                    @RequestBody LocalDateTime endLesson) {
 
-        return groupService.updateCourseTimeForGroup(groupId, startLesson, endLesson);
+        return groupService.updateCourseTimeForGroup(id, startLesson, endLesson);
     }
 
-    @PutMapping("/delete-course-schedule-for-group/{groupId}")
+    @DeleteMapping("/delete-schedule/{id}")
     @Operation(summary = "Delete course schedule for group by groupId")
-    public void deleteCourseScheduleForGroup(@PathVariable @Parameter(name = "groupId") UUID groupId) {
+    public void deleteCourseScheduleForGroup(@PathVariable @Parameter(name = "groupId") UUID id) {
 
-        groupService.deleteScheduleForGroup(groupId);
+        groupService.deleteScheduleForGroup(id);
     }
 }

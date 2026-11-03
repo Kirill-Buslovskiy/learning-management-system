@@ -24,15 +24,19 @@ public class GroupEntity {
             inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"))
     @ToString.Exclude
     private final Set<StudentEntity> studentsInGroup = new HashSet<>();
+
     @ManyToMany(mappedBy = "groupOnCourses")
     @ToString.Exclude
     private final Set<CourseEntity> courses = new HashSet<>();
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
+
     @Column(name = "name")
     private String groupName;
+
     @OneToMany(mappedBy = "group")
     @ToString.Exclude
     private Set<ScheduleEntity> schedules = new HashSet<>();

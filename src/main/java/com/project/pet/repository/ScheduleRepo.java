@@ -18,15 +18,15 @@ public interface ScheduleRepo extends JpaRepository<ScheduleEntity, UUID> {
 
     @Query(value = "SELECT schedule FROM ScheduleEntity schedule JOIN FETCH schedule.course course JOIN FETCH  course.teacher teacher WHERE teacher.id = :teacherId",
             countQuery = "SELECT COUNT(schedule) FROM ScheduleEntity schedule WHERE schedule.course.teacher.id = :teacherId")
-    Page<ScheduleDTO> viewClassScheduleForTeacher(@Param(value = "teacherId") UUID teacherId, Pageable pageable);
+Page<ScheduleEntity> viewClassScheduleForTeacher(@Param(value = "teacherId") UUID teacherId, Pageable pageable);
 
     @Query(value = "SELECT schedule FROM ScheduleEntity schedule JOIN FETCH schedule.group group WHERE group.id = :groupId",
-            countQuery = "SELECT COUNT(schedule) FROM ScheduleEntity schedule WHERE schedule.group.id = :teacherId")
-    Page<ScheduleDTO> viewCourseScheduleForGroup(@Param("groupId") UUID groupId, Pageable pageable);
+            countQuery = "SELECT COUNT(schedule) FROM ScheduleEntity schedule WHERE schedule.group.id = :groupId")
+    Page<ScheduleEntity> viewCourseScheduleForGroup(@Param("groupId") UUID groupId, Pageable pageable);
 
     @Query(value = "UPDATE ScheduleEntity se SET se.dateStartLesson = :startLesson, se.dateEndLesson = :endLesson WHERE se.group.id = :groupId")
     @Modifying
-    ScheduleDTO updateDateLessonForGroup(@Param("groupId") UUID groupId,
+    int updateDateLessonForGroup(@Param("groupId") UUID groupId,
                                             @Param("startLesson") LocalDateTime startLesson,
                                             @Param("endLesson") LocalDateTime endLesson);
 

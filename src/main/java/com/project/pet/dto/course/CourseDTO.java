@@ -1,8 +1,5 @@
 package com.project.pet.dto.course;
 
-import com.project.pet.dto.schedule.ScheduleDTO;
-
-import java.util.Set;
 import java.util.UUID;
 
 public record CourseDTO(
@@ -10,8 +7,7 @@ public record CourseDTO(
 
         String courseName,
 
-        String description,
+        String description
 
-        Set<ScheduleDTO> schedules
 ) {
 }

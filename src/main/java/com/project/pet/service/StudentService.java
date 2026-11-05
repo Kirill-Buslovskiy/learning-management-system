@@ -19,19 +19,25 @@ public class StudentService {
     private final StudentMapper studentMapper;
 
     @Transactional
-    public StudentEntity addStudent(StudentDTO studentDto) {
-        return studentRepo
-                .save(studentMapper.toEntity(studentDto));
+    public StudentDTO addStudent(StudentDTO studentDto) {
+
+        StudentEntity entity = studentMapper.toEntity(studentDto);
+
+        studentRepo.save(entity);
+
+        return studentMapper.toDto(entity);
     }
 
     @Transactional
-    public StudentEntity updateStudent(UUID id, StudentDTO studentDto) {
+    public StudentDTO updateStudent(UUID id, StudentDTO studentDto) {
         StudentEntity student = studentRepo.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException("Student with id: " + id + "not found"));
 
         student.setStudentName(studentDto.studentName());
         student.setStudentSurname(studentDto.studentSurname());
-        return student;
+
+        studentRepo.save(student);
+        return studentMapper.toDto(student);
     }
 
     @Transactional

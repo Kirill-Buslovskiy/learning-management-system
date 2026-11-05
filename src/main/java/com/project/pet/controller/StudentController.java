@@ -1,7 +1,6 @@
 package com.project.pet.controller;
 
 import com.project.pet.dto.student.StudentDTO;
-import com.project.pet.entity.student.StudentEntity;
 import com.project.pet.service.StudentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -21,14 +20,14 @@ public class StudentController {
 
     @PostMapping("/students")
     @Operation(summary = "Add student on site")
-    public StudentEntity createStudent(@RequestBody StudentDTO studentDTO) {
+    public StudentDTO createStudent(@RequestBody StudentDTO studentDTO) {
         return studentService.addStudent(studentDTO);
     }
 
     @PostMapping("/students/{id}")
     @Operation(summary = "Update student by id")
-    public StudentEntity updateStudent(@PathVariable @Parameter(name = "StudentId") UUID id,
-                                       @RequestBody StudentDTO studentDTO) {
+    public StudentDTO updateStudent(@PathVariable @Parameter(name = "StudentId") UUID id,
+                                    @RequestBody StudentDTO studentDTO) {
         return studentService.updateStudent(id, studentDTO);
     }
 

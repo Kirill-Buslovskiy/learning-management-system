@@ -1,8 +1,7 @@
 package com.project.pet.controller;
 
 import com.project.pet.dto.group.GroupDTO;
-import com.project.pet.entity.group.GroupEntity;
-import com.project.pet.entity.schedule.ScheduleEntity;
+import com.project.pet.dto.schedule.ScheduleDTO;
 import com.project.pet.service.GroupService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -25,14 +24,14 @@ public class GroupController {
 
     @PostMapping("/groups")
     @Operation(summary = "Add group on site")
-    public GroupEntity addGroup(@RequestBody GroupDTO groupDTO) {
+    public GroupDTO addGroup(@RequestBody GroupDTO groupDTO) {
         return groupService.addGroup(groupDTO);
     }
 
     @PostMapping("/groups/{id}")
     @Operation(summary = "Update group by id")
-    public GroupEntity updateGroup(@PathVariable @Parameter(name = "groupId") UUID id,
-                                   @RequestBody GroupDTO groupDTO) {
+    public GroupDTO updateGroup(@PathVariable @Parameter(name = "groupId") UUID id,
+                                @RequestBody GroupDTO groupDTO) {
         return groupService.updateGroup(id, groupDTO);
     }
 
@@ -61,24 +60,24 @@ public class GroupController {
 
     @GetMapping("/schedule/{id}")
     @Operation(summary = "Get view schedule of group by id")
-    public Page<ScheduleEntity> viewScheduleOfGroup(@PathVariable @Parameter(name = "groupId") UUID id) {
+    public Page<ScheduleDTO> viewScheduleOfGroup(@PathVariable @Parameter(name = "groupId") UUID id) {
 
         return groupService.viewScheduleForGroup(id, 0, 50);
     }
 
     @PostMapping("/schedule-for-group/{id}")
     @Operation(summary = "Update course schedule for group by groupId")
-    public ScheduleEntity updateCourseTimeForGroup(@PathVariable @Parameter(name = "groupId") UUID id,
-                                                   @RequestBody LocalDateTime startLesson,
-                                                   @RequestBody LocalDateTime endLesson) {
+    public ScheduleDTO updateCourseTimeForGroup(@PathVariable @Parameter(name = "groupId") UUID id,
+                                                @RequestBody LocalDateTime startLesson,
+                                                @RequestBody LocalDateTime endLesson) {
 
         return groupService.updateCourseTimeForGroup(id, startLesson, endLesson);
     }
 
     @DeleteMapping("/delete-schedule/{id}")
     @Operation(summary = "Delete course schedule for group by groupId")
-    public void deleteCourseScheduleForGroup(@PathVariable @Parameter(name = "groupId") UUID id) {
+    public int deleteCourseScheduleForGroup(@PathVariable @Parameter(name = "groupId") UUID id) {
 
-        groupService.deleteScheduleForGroup(id);
+        return groupService.deleteScheduleForGroup(id);
     }
 }

@@ -1,6 +1,8 @@
 package com.project.pet.service;
 
 import com.project.pet.dto.group.GroupDTO;
+import com.project.pet.dto.schedule.ScheduleDTO;
+import com.project.pet.dto.student.StudentDTO;
 import com.project.pet.entity.group.GroupEntity;
 import com.project.pet.entity.schedule.ScheduleEntity;
 import com.project.pet.entity.student.StudentEntity;
@@ -8,6 +10,8 @@ import com.project.pet.exceptions.GroupNotFoundException;
 import com.project.pet.exceptions.ScheduleNotFoundException;
 import com.project.pet.exceptions.StudentNotFoundException;
 import com.project.pet.mapper.GroupMapper;
+import com.project.pet.mapper.ScheduleMapper;
+import com.project.pet.mapper.StudentMapper;
 import com.project.pet.repository.GroupRepo;
 import com.project.pet.repository.ScheduleRepo;
 import com.project.pet.repository.StudentRepo;
@@ -29,20 +33,28 @@ public class GroupService {
     private final StudentRepo studentRepo;
     private final GroupMapper groupMapper;
     private final ScheduleRepo scheduleRepo;
+    private final StudentMapper studentMapper;
+    private final ScheduleMapper scheduleMapper;
 
     @Transactional
-    public GroupEntity addGroup(GroupDTO groupDTO) {
-        return groupRepo
-                .save(groupMapper.toEntity(groupDTO));
+    public GroupDTO addGroup(GroupDTO groupDTO) {
+
+        GroupEntity entity = groupMapper.toEntity(groupDTO);
+
+        groupRepo.save(entity);
+
+        return groupMapper.toDto(entity);
 
     }
 
     @Transactional
-    public GroupEntity updateGroup(UUID groupId, GroupDTO groupDTO) {
-        GroupEntity group = getGroupEntity(groupId);
+    public GroupDTO updateGroup(UUID groupId, GroupDTO groupDTO) {
+        GroupEntity group = groupMapper.toEntity(getGroupEntity(groupId));
 
         group.setGroupName(groupDTO.groupName());
-        return groupRepo.save(group);
+
+        groupRepo.save(group);
+        return groupMapper.toDto(group);
     }
 
     @Transactional
@@ -52,9 +64,9 @@ public class GroupService {
 
     @Transactional
     public void addStudentToGroup(UUID studentId, UUID groupId) {
-        StudentEntity student = getStudent(studentId);
+        StudentEntity student = studentMapper.toEntity(getStudent(studentId));
 
-        GroupEntity group = getGroupEntity(groupId);
+        GroupEntity group = groupMapper.toEntity(getGroupEntity(groupId));
 
         group.addStudent(student);
 
@@ -63,47 +75,48 @@ public class GroupService {
 
     @Transactional
     public void addTimeOfLessonForGroup(UUID groupId, UUID scheduleId, LocalDateTime startLesson, LocalDateTime endLesson) {
-        GroupEntity group = getGroupEntity(groupId);
+        GroupEntity group = groupMapper.toEntity(getGroupEntity(groupId));
 
-        ScheduleEntity schedule = getSchedule(scheduleId);
+        ScheduleEntity schedule = scheduleMapper.toEntity(getSchedule(scheduleId));
 
         schedule.setDateStartLesson(startLesson);
         schedule.setDateStartLesson(endLesson);
 
-        scheduleRepo.save(schedule);
         group.addSchedule(schedule);
+
+        scheduleRepo.save(schedule);
         groupRepo.save(group);
     }
 
     @Transactional
-    public Page<ScheduleEntity> viewScheduleForGroup(UUID groupId, int page, int size) {
+    public Page<ScheduleDTO> viewScheduleForGroup(UUID groupId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("dateStartLesson").ascending());
 
         return scheduleRepo.viewCourseScheduleForGroup(groupId, pageable);
     }
 
     @Transactional
-    public ScheduleEntity updateCourseTimeForGroup(UUID groupId, LocalDateTime startLesson, LocalDateTime endLesson) {
+    public ScheduleDTO updateCourseTimeForGroup(UUID groupId, LocalDateTime startLesson, LocalDateTime endLesson) {
         return scheduleRepo.updateDateLessonForGroup(groupId, startLesson, endLesson);
     }
 
     @Transactional
-    public void deleteScheduleForGroup(UUID groupId) {
-        scheduleRepo.deleteDateLessonForGroup(groupId);
+    public int deleteScheduleForGroup(UUID groupId) {
+        return scheduleRepo.deleteDateLessonForGroup(groupId);
     }
 
-    private GroupEntity getGroupEntity(UUID groupId) {
-        return groupRepo.findById(groupId)
-                .orElseThrow(() -> new GroupNotFoundException("Course with id: " + groupId + " is not found"));
+    private GroupDTO getGroupEntity(UUID groupId) {
+        return groupMapper.toDto(groupRepo.findById(groupId)
+                .orElseThrow(() -> new GroupNotFoundException("Course with id: " + groupId + " is not found")));
     }
 
-    private StudentEntity getStudent(UUID studentId) {
-        return studentRepo.findById(studentId)
-                .orElseThrow(() -> new StudentNotFoundException("Student with id: " + studentId + " not found."));
+    private StudentDTO getStudent(UUID studentId) {
+        return studentMapper.toDto(studentRepo.findById(studentId)
+                .orElseThrow(() -> new StudentNotFoundException("Student with id: " + studentId + " not found.")));
     }
 
-    private ScheduleEntity getSchedule(UUID scheduleId) {
-        return scheduleRepo.findById(scheduleId)
-                .orElseThrow(() -> new ScheduleNotFoundException("Schedule with id: " + scheduleId + " is not found"));
+    private ScheduleDTO getSchedule(UUID scheduleId) {
+        return scheduleMapper.toDto(scheduleRepo.findById(scheduleId)
+                .orElseThrow(() -> new ScheduleNotFoundException("Schedule with id: " + scheduleId + " is not found")));
     }
 }

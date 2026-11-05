@@ -90,18 +90,25 @@ public class GroupService {
 
     @Transactional
     public Page<ScheduleDTO> viewScheduleForGroup(UUID groupId, int page, int size) {
+
         Pageable pageable = PageRequest.of(page, size, Sort.by("dateStartLesson").ascending());
 
-        return scheduleRepo.viewCourseScheduleForGroup(groupId, pageable);
+
+        Page<ScheduleEntity> scheduleEntities = scheduleRepo.viewCourseScheduleForGroup(groupId, pageable);
+
+        return scheduleEntities
+                .map(scheduleMapper::toDto);
     }
 
     @Transactional
-    public ScheduleDTO updateCourseTimeForGroup(UUID groupId, LocalDateTime startLesson, LocalDateTime endLesson) {
+    public int updateCourseTimeForGroup(UUID groupId, LocalDateTime startLesson, LocalDateTime endLesson) {
+
         return scheduleRepo.updateDateLessonForGroup(groupId, startLesson, endLesson);
     }
 
     @Transactional
     public int deleteScheduleForGroup(UUID groupId) {
+
         return scheduleRepo.deleteDateLessonForGroup(groupId);
     }
 

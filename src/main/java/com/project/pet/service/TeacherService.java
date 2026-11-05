@@ -4,10 +4,12 @@ import com.project.pet.dto.course.CourseDTO;
 import com.project.pet.dto.schedule.ScheduleDTO;
 import com.project.pet.dto.teacher.TeacherDTO;
 import com.project.pet.entity.course.CourseEntity;
+import com.project.pet.entity.schedule.ScheduleEntity;
 import com.project.pet.entity.teacher.TeacherEntity;
 import com.project.pet.exceptions.CourseNotFoundException;
 import com.project.pet.exceptions.TeacherNotFoundException;
 import com.project.pet.mapper.CourseMapper;
+import com.project.pet.mapper.ScheduleMapper;
 import com.project.pet.mapper.TeacherMapper;
 import com.project.pet.repository.CourseRepo;
 import com.project.pet.repository.ScheduleRepo;
@@ -31,6 +33,7 @@ public class TeacherService {
     private final CourseRepo courseRepo;
     private final ScheduleRepo scheduleRepo;
     private final CourseMapper courseMapper;
+    private final ScheduleMapper scheduleMapper;
 
     @Transactional
     public TeacherDTO addTeacher(TeacherDTO teacherDTO) {
@@ -74,7 +77,10 @@ public class TeacherService {
     public Page<ScheduleDTO> viewClassScheduleForTeacher(UUID teacherId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("dateStartLesson").ascending());
 
-        return scheduleRepo.viewClassScheduleForTeacher(teacherId, pageable);
+        Page<ScheduleEntity> scheduleEntities = scheduleRepo.viewClassScheduleForTeacher(teacherId, pageable);
+
+        return scheduleEntities
+                .map(scheduleMapper::toDto);
     }
 
 

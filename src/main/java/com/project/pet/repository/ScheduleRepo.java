@@ -1,6 +1,5 @@
 package com.project.pet.repository;
 
-import com.project.pet.dto.schedule.ScheduleDTO;
 import com.project.pet.entity.schedule.ScheduleEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +17,7 @@ public interface ScheduleRepo extends JpaRepository<ScheduleEntity, UUID> {
 
     @Query(value = "SELECT schedule FROM ScheduleEntity schedule JOIN FETCH schedule.course course JOIN FETCH  course.teacher teacher WHERE teacher.id = :teacherId",
             countQuery = "SELECT COUNT(schedule) FROM ScheduleEntity schedule WHERE schedule.course.teacher.id = :teacherId")
-Page<ScheduleEntity> viewClassScheduleForTeacher(@Param(value = "teacherId") UUID teacherId, Pageable pageable);
+    Page<ScheduleEntity> viewClassScheduleForTeacher(@Param(value = "teacherId") UUID teacherId, Pageable pageable);
 
     @Query(value = "SELECT schedule FROM ScheduleEntity schedule JOIN FETCH schedule.group group WHERE group.id = :groupId",
             countQuery = "SELECT COUNT(schedule) FROM ScheduleEntity schedule WHERE schedule.group.id = :groupId")
@@ -27,8 +26,8 @@ Page<ScheduleEntity> viewClassScheduleForTeacher(@Param(value = "teacherId") UUI
     @Query(value = "UPDATE ScheduleEntity se SET se.dateStartLesson = :startLesson, se.dateEndLesson = :endLesson WHERE se.group.id = :groupId")
     @Modifying
     int updateDateLessonForGroup(@Param("groupId") UUID groupId,
-                                            @Param("startLesson") LocalDateTime startLesson,
-                                            @Param("endLesson") LocalDateTime endLesson);
+                                 @Param("startLesson") LocalDateTime startLesson,
+                                 @Param("endLesson") LocalDateTime endLesson);
 
     @Query(value = "UPDATE ScheduleEntity se SET se.dateStartLesson = NULL, se.dateEndLesson = NULL WHERE se.group.id = :groupId")
     @Modifying

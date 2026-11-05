@@ -1,9 +1,8 @@
 package com.project.pet.controller;
 
+import com.project.pet.dto.course.CourseDTO;
+import com.project.pet.dto.schedule.ScheduleDTO;
 import com.project.pet.dto.teacher.TeacherDTO;
-import com.project.pet.entity.course.CourseEntity;
-import com.project.pet.entity.schedule.ScheduleEntity;
-import com.project.pet.entity.teacher.TeacherEntity;
 import com.project.pet.service.TeacherService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -24,15 +23,15 @@ public class TeacherController {
 
     @PostMapping("/teachers")
     @Operation(summary = "Add teacher on site")
-    public TeacherEntity createTeacher(@RequestBody TeacherDTO teacherDTO) {
+    public TeacherDTO createTeacher(@RequestBody TeacherDTO teacherDTO) {
         return teacherService.addTeacher(teacherDTO);
     }
 
 
     @PostMapping("/teachers/{id}")
     @Operation(summary = "Update teacher by id")
-    public TeacherEntity updateTeacher(@PathVariable @Parameter(name = "teacherId") UUID id,
-                                       @RequestBody TeacherDTO teacherDTO) {
+    public TeacherDTO updateTeacher(@PathVariable @Parameter(name = "teacherId") UUID id,
+                                    @RequestBody TeacherDTO teacherDTO) {
         return teacherService.updateTeacher(id, teacherDTO);
     }
 
@@ -44,14 +43,14 @@ public class TeacherController {
 
     @PostMapping("/teachers/{teacherId}/course/{courseId}")
     @Operation(summary = "Add teacher with id to course by id")
-    public CourseEntity addTeacherToCourse(@PathVariable @Parameter(name = "teacherId") UUID teacherId,
-                                           @PathVariable @Parameter(name = "courseId") UUID courseId) {
+    public CourseDTO addTeacherToCourse(@PathVariable @Parameter(name = "teacherId") UUID teacherId,
+                                        @PathVariable @Parameter(name = "courseId") UUID courseId) {
         return teacherService.addTeacherToCourse(teacherId, courseId);
     }
 
     @GetMapping("/schedule/{id}")
     @Operation(summary = "Get view schedule by teacherId")
-    public Page<ScheduleEntity> viewSchedule(@PathVariable @Parameter(name = "teacherId") UUID id) {
+    public Page<ScheduleDTO> viewSchedule(@PathVariable @Parameter(name = "teacherId") UUID id) {
         return teacherService.viewClassScheduleForTeacher(id, 0, 50);
     }
 }

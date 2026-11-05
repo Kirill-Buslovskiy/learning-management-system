@@ -67,9 +67,9 @@ public class GroupController {
 
     @PostMapping("/schedule-for-group/{id}")
     @Operation(summary = "Update course schedule for group by groupId")
-    public ScheduleDTO updateCourseTimeForGroup(@PathVariable @Parameter(name = "groupId") UUID id,
-                                                @RequestBody LocalDateTime startLesson,
-                                                @RequestBody LocalDateTime endLesson) {
+    public int updateCourseTimeForGroup(@PathVariable @Parameter(name = "groupId") UUID id,
+                                        @RequestBody LocalDateTime startLesson,
+                                        @RequestBody LocalDateTime endLesson) {
 
         return groupService.updateCourseTimeForGroup(id, startLesson, endLesson);
     }

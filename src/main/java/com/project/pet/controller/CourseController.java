@@ -1,7 +1,6 @@
 package com.project.pet.controller;
 
 import com.project.pet.dto.course.CourseDTO;
-import com.project.pet.entity.course.CourseEntity;
 import com.project.pet.service.CourseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -29,7 +28,7 @@ public class CourseController {
             @ApiResponse(responseCode = "404", description = "Course not found."),
             @ApiResponse(responseCode = "500", description = "Something wrong on server."),
     })
-    public CourseEntity addCourse(@RequestBody CourseDTO courseDTO) {
+    public CourseDTO addCourse(@RequestBody CourseDTO courseDTO) {
         return courseService.addCourse(courseDTO);
     }
 
@@ -41,8 +40,8 @@ public class CourseController {
             @ApiResponse(responseCode = "404", description = "Course not found."),
             @ApiResponse(responseCode = "500", description = "Something wrong on server.")
     })
-    public CourseEntity updateCourse(@PathVariable @Parameter(name = "courseId") UUID id,
-                                     @RequestBody CourseDTO courseDTO) {
+    public CourseDTO updateCourse(@PathVariable @Parameter(name = "courseId") UUID id,
+                                  @RequestBody CourseDTO courseDTO) {
         return courseService.updateCourse(id, courseDTO);
     }
 

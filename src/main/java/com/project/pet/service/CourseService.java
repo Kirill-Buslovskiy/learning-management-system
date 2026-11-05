@@ -1,7 +1,7 @@
 package com.project.pet.service;
 
-import com.project.pet.entity.course.CourseEntity;
 import com.project.pet.dto.course.CourseDTO;
+import com.project.pet.entity.course.CourseEntity;
 import com.project.pet.entity.group.GroupEntity;
 import com.project.pet.exceptions.CourseNotFoundException;
 import com.project.pet.exceptions.GroupNotFoundException;
@@ -24,19 +24,25 @@ public class CourseService {
 
 
     @Transactional
-    public CourseEntity addCourse(CourseDTO courseDTO) {
-        return courseRepo
-                .save(courseMapper.toEntity(courseDTO));
+    public CourseDTO addCourse(CourseDTO courseDTO) {
+        CourseEntity entity = courseMapper.toEntity(courseDTO);
+
+        courseRepo.save(entity);
+
+        return courseMapper.toDto(entity);
     }
 
     @Transactional
-    public CourseEntity updateCourse(UUID id, CourseDTO courseDTO) {
+    public CourseDTO updateCourse(UUID id, CourseDTO courseDTO) {
         CourseEntity course = courseRepo.findById(id)
                 .orElseThrow(() -> new CourseNotFoundException("Course with id: " + id + "not found"));
 
         course.setCourseName(courseDTO.courseName());
         course.setDescription(courseDTO.description());
-        return courseRepo.save(course);
+
+        courseRepo.save(course);
+
+        return courseMapper.toDto(course);
     }
 
     @Transactional

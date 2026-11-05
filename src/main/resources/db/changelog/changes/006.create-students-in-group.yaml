@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6-create-students-in-group
+      author: Kirill Buslovskii
+
+      changes:
+        - createTable:
+            tableName: students_in_group
+            columns:
+              - column:
+                  name: student_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: group_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: students_in_group
+            columnNames: student_id, group_id
+            constraintName: pk_students_in_group

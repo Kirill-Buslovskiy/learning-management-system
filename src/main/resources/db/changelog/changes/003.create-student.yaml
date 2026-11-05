@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3-create-student
+      author: Kirill Buslovskii
+
+      changes:
+        - createTable:
+            tableName: student
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: student_name
+                  type: VARCHAR
+              - column:
+                  name: student_surname
+                  type: VARCHAR

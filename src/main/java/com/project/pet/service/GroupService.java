@@ -75,19 +75,20 @@ public class GroupService {
 
     @Transactional
     public void addTimeOfLessonForGroup(UUID groupId, UUID scheduleId, LocalDateTime startLesson, LocalDateTime endLesson) {
-        GroupEntity group = groupRepo.findById(groupId)
-                .orElseThrow(() -> new GroupNotFoundException("Group with id: " + groupId + " not found"));
 
         ScheduleEntity schedule = scheduleRepo.findById(scheduleId)
-                .orElseThrow(() -> new ScheduleNotFoundException("Schedule with id: " + scheduleId + " not found"));
+                .orElseThrow(() -> new ScheduleNotFoundException("Schedule with id: %s not found".formatted(scheduleId)));
 
-        schedule.setDateStartLesson(startLesson);
-        schedule.setDateStartLesson(endLesson);
+        UUID scheduleOfGroupId = schedule.getGroup().getId();
 
-        group.addSchedule(schedule);
+        if (scheduleOfGroupId.equals(groupId)) {
 
-        scheduleRepo.save(schedule);
-        groupRepo.save(group);
+            schedule.setDateStartLesson(startLesson);
+            schedule.setDateEndLesson(endLesson);
+            scheduleRepo.save(schedule);
+        } else {
+            throw new GroupNotFoundException("Group with id: %s has no schedule with id: %s".formatted(groupId, scheduleId));
+        }
     }
 
     @Transactional

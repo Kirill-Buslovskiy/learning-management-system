@@ -38,6 +38,7 @@ public class TeacherService {
     @Transactional
     public TeacherDTO addTeacher(TeacherDTO teacherDTO) {
         TeacherEntity entity = teacherMapper.toEntity(teacherDTO);
+
         TeacherEntity saved = teacherRepo.save(entity);
         return teacherMapper.toDto(saved);
 
@@ -45,7 +46,8 @@ public class TeacherService {
 
     @Transactional
     public TeacherDTO updateTeacher(UUID id, TeacherDTO teacherDTO) {
-        TeacherEntity teacher = teacherMapper.toEntity(getTeacher(id));
+        TeacherEntity teacher = teacherRepo.findById(id)
+                .orElseThrow(() -> new TeacherNotFoundException("Teacher with id: %s not found".formatted(id)));
 
         teacher.setFirstName(teacherDTO.firstName());
         teacher.setSurname(teacherDTO.surname());
@@ -62,8 +64,10 @@ public class TeacherService {
     @Transactional
     public CourseDTO addTeacherToCourse(UUID teacherId, UUID courseId) {
 
-        TeacherEntity teacher = teacherMapper.toEntity(getTeacher(teacherId));
-        CourseEntity course = courseMapper.toEntity(getCourse(courseId));
+        TeacherEntity teacher = teacherRepo.findById(teacherId)
+                .orElseThrow(() -> new TeacherNotFoundException("Teacher with id: %s not found".formatted(teacherId)));
+        CourseEntity course = courseRepo.findById(courseId)
+                .orElseThrow(() -> new CourseNotFoundException("Course with id: %s not found".formatted(courseId)));
 
         teacher.addCourse(course);
 
@@ -81,16 +85,5 @@ public class TeacherService {
 
         return scheduleEntities
                 .map(scheduleMapper::toDto);
-    }
-
-
-    private TeacherDTO getTeacher(UUID teacherId) {
-        return teacherMapper.toDto(teacherRepo.findById(teacherId)
-                .orElseThrow(() -> new TeacherNotFoundException("Student with id: " + teacherId + "not found")));
-    }
-
-    private CourseDTO getCourse(UUID courseId) {
-        return courseMapper.toDto(courseRepo.findById(courseId)
-                .orElseThrow(() -> new CourseNotFoundException("Teacher with id: " + courseId + "not found")));
     }
 }

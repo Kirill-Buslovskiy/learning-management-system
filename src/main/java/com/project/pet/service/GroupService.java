@@ -2,7 +2,6 @@ package com.project.pet.service;
 
 import com.project.pet.dto.group.GroupDTO;
 import com.project.pet.dto.schedule.ScheduleDTO;
-import com.project.pet.dto.student.StudentDTO;
 import com.project.pet.entity.group.GroupEntity;
 import com.project.pet.entity.schedule.ScheduleEntity;
 import com.project.pet.entity.student.StudentEntity;
@@ -11,7 +10,6 @@ import com.project.pet.exceptions.ScheduleNotFoundException;
 import com.project.pet.exceptions.StudentNotFoundException;
 import com.project.pet.mapper.GroupMapper;
 import com.project.pet.mapper.ScheduleMapper;
-import com.project.pet.mapper.StudentMapper;
 import com.project.pet.repository.GroupRepo;
 import com.project.pet.repository.ScheduleRepo;
 import com.project.pet.repository.StudentRepo;
@@ -33,7 +31,6 @@ public class GroupService {
     private final StudentRepo studentRepo;
     private final GroupMapper groupMapper;
     private final ScheduleRepo scheduleRepo;
-    private final StudentMapper studentMapper;
     private final ScheduleMapper scheduleMapper;
 
     @Transactional
@@ -49,7 +46,8 @@ public class GroupService {
 
     @Transactional
     public GroupDTO updateGroup(UUID groupId, GroupDTO groupDTO) {
-        GroupEntity group = groupMapper.toEntity(getGroupEntity(groupId));
+        GroupEntity group = groupRepo.findById(groupId)
+                .orElseThrow(() -> new GroupNotFoundException("Group with id: %s not found".formatted(groupId)));
 
         group.setGroupName(groupDTO.groupName());
 
@@ -64,9 +62,11 @@ public class GroupService {
 
     @Transactional
     public void addStudentToGroup(UUID studentId, UUID groupId) {
-        StudentEntity student = studentMapper.toEntity(getStudent(studentId));
+        StudentEntity student = studentRepo.findById(studentId)
+                .orElseThrow(() -> new StudentNotFoundException("Student with id: %s not found".formatted(studentId)));
 
-        GroupEntity group = groupMapper.toEntity(getGroupEntity(groupId));
+        GroupEntity group = groupRepo.findById(groupId)
+                .orElseThrow(() -> new GroupNotFoundException("Group with id: %s not found".formatted(groupId)));
 
         group.addStudent(student);
 
@@ -75,9 +75,11 @@ public class GroupService {
 
     @Transactional
     public void addTimeOfLessonForGroup(UUID groupId, UUID scheduleId, LocalDateTime startLesson, LocalDateTime endLesson) {
-        GroupEntity group = groupMapper.toEntity(getGroupEntity(groupId));
+        GroupEntity group = groupRepo.findById(groupId)
+                .orElseThrow(() -> new GroupNotFoundException("Group with id: " + groupId + " not found"));
 
-        ScheduleEntity schedule = scheduleMapper.toEntity(getSchedule(scheduleId));
+        ScheduleEntity schedule = scheduleRepo.findById(scheduleId)
+                .orElseThrow(() -> new ScheduleNotFoundException("Schedule with id: " + scheduleId + " not found"));
 
         schedule.setDateStartLesson(startLesson);
         schedule.setDateStartLesson(endLesson);
@@ -112,18 +114,4 @@ public class GroupService {
         return scheduleRepo.deleteDateLessonForGroup(groupId);
     }
 
-    private GroupDTO getGroupEntity(UUID groupId) {
-        return groupMapper.toDto(groupRepo.findById(groupId)
-                .orElseThrow(() -> new GroupNotFoundException("Course with id: " + groupId + " is not found")));
-    }
-
-    private StudentDTO getStudent(UUID studentId) {
-        return studentMapper.toDto(studentRepo.findById(studentId)
-                .orElseThrow(() -> new StudentNotFoundException("Student with id: " + studentId + " not found.")));
-    }
-
-    private ScheduleDTO getSchedule(UUID scheduleId) {
-        return scheduleMapper.toDto(scheduleRepo.findById(scheduleId)
-                .orElseThrow(() -> new ScheduleNotFoundException("Schedule with id: " + scheduleId + " is not found")));
-    }
 }

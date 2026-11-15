@@ -25,17 +25,17 @@ public class CourseService {
 
     @Transactional
     public CourseDTO addCourse(CourseDTO courseDTO) {
-        CourseEntity entity = courseMapper.toEntity(courseDTO);
+        CourseEntity course = courseMapper.toEntity(courseDTO);
 
-        courseRepo.save(entity);
+        courseRepo.save(course);
 
-        return courseMapper.toDto(entity);
+        return courseMapper.toDto(course);
     }
 
     @Transactional
     public CourseDTO updateCourse(UUID id, CourseDTO courseDTO) {
         CourseEntity course = courseRepo.findById(id)
-                .orElseThrow(() -> new CourseNotFoundException("Course with id: " + id + "not found"));
+                .orElseThrow(() -> new CourseNotFoundException("Course with id: %s is not found".formatted(id)));
 
         course.setCourseName(courseDTO.courseName());
         course.setDescription(courseDTO.description());
@@ -54,14 +54,12 @@ public class CourseService {
     @Transactional
     public void addGroupsToCourses(UUID groupId, UUID coursesId) {
         CourseEntity course = courseRepo.findById(coursesId)
-                .orElseThrow(() -> new CourseNotFoundException("Course with id: " + coursesId + " is not found"));
+                .orElseThrow(() -> new CourseNotFoundException("Course with id: %s is not found".formatted(coursesId)));
 
         GroupEntity group = groupRepo.findById(groupId)
-                .orElseThrow(() -> new GroupNotFoundException("Group with id: " + groupId + " is not found"));
+                .orElseThrow(() -> new GroupNotFoundException("Group with id: %s is not found".formatted(groupId)));
 
         course.addGroup(group);
         courseRepo.save(course);
     }
-
-
 }

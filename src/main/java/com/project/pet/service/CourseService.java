@@ -27,9 +27,9 @@ public class CourseService {
     public CourseDTO addCourse(CourseDTO courseDTO) {
         CourseEntity course = courseMapper.toEntity(courseDTO);
 
-        courseRepo.save(course);
+        CourseEntity savedCourse = courseRepo.save(course);
 
-        return courseMapper.toDto(course);
+        return courseMapper.toDto(savedCourse);
     }
 
     @Transactional

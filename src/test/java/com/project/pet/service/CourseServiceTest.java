@@ -1,7 +1,6 @@
 package com.project.pet.service;
 
 import com.project.pet.dto.course.CourseDTO;
-import com.project.pet.dto.group.GroupDTO;
 import com.project.pet.entity.course.CourseEntity;
 import com.project.pet.entity.group.GroupEntity;
 import com.project.pet.exceptions.CourseNotFoundException;
@@ -37,6 +36,7 @@ class CourseServiceTest {
 
     private CourseDTO courseDTO;
     private CourseDTO outCourseDTO;
+    private CourseDTO updatedCourseDto;
     private CourseEntity courseEntity;
     private CourseEntity savedCourseEntity;
     private GroupEntity groupEntity;
@@ -48,29 +48,27 @@ class CourseServiceTest {
         courseId = UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
         groupId = UUID.fromString("123e4567-e89b-24d6-a456-426614174000");
 
-        courseDTO = new CourseDTO(courseId, "Java", "course for Java development");
-        outCourseDTO = new CourseDTO(courseId, "Java", "course for Java development");
-
         courseEntity = new CourseEntity();
-        courseEntity.setId(courseId);
-        courseEntity.setCourseName(courseDTO.courseName());
-        courseEntity.setDescription(courseDTO.description());
+        courseEntity.setCourseName("Java");
+        courseEntity.setDescription("course for Java development");
 
         savedCourseEntity = new CourseEntity();
-        savedCourseEntity.setId(courseDTO.id());
-        savedCourseEntity.setCourseName(courseDTO.courseName());
-        savedCourseEntity.setDescription(courseDTO.description());
+        savedCourseEntity.setId(courseId);
+        savedCourseEntity.setCourseName(courseEntity.getCourseName());
+        savedCourseEntity.setDescription(courseEntity.getDescription());
 
-        GroupDTO groupDTO = new GroupDTO(groupId, "Java development");
+        courseDTO = new CourseDTO(null, "Java", "course for Java development");
+
+        outCourseDTO = new CourseDTO(courseId, "Java", "course for Java development");
+
+        updatedCourseDto = new CourseDTO(courseId, "updated Java", "updated course for Java development");
 
         groupEntity = new GroupEntity();
-        groupEntity.setId(groupDTO.id());
-        groupEntity.setGroupName(groupDTO.groupName());
+        groupEntity.setGroupName("Java development");
 
         GroupEntity savedGroupEntity = new GroupEntity();
-        savedGroupEntity.setId(groupDTO.id());
-        savedGroupEntity.setGroupName(groupDTO.groupName());
-
+        savedGroupEntity.setId(groupId);
+        savedGroupEntity.setGroupName(groupEntity.getGroupName());
     }
 
     @Test
@@ -80,12 +78,16 @@ class CourseServiceTest {
 
         when(courseRepo.save(courseEntity)).thenReturn(savedCourseEntity);
 
-        when(mapper.toDto(courseEntity)).thenReturn(outCourseDTO);
+        when(mapper.toDto(savedCourseEntity)).thenReturn(outCourseDTO);
 
         CourseDTO result = service.addCourse(courseDTO);
 
-        assertSame(result, outCourseDTO);
-        assertEquals(result.id(), savedCourseEntity.getId());
+        verify(mapper).toEntity(courseDTO);
+        verify(courseRepo, times(1)).save(courseEntity);
+        verify(mapper, times(1)).toDto(savedCourseEntity);
+
+        assertSame(outCourseDTO, result);
+        assertEquals(savedCourseEntity.getId(), result.id());
     }
 
     @Test
@@ -93,12 +95,18 @@ class CourseServiceTest {
 
         when(courseRepo.findById(courseId)).thenReturn(Optional.of(courseEntity));
         when(courseRepo.save(courseEntity)).thenReturn(savedCourseEntity);
-        when(mapper.toDto(courseEntity)).thenReturn(outCourseDTO);
+        when(mapper.toDto(courseEntity)).thenReturn(updatedCourseDto);
 
         CourseDTO result = service.updateCourse(courseId, courseDTO);
+        String courseName = savedCourseEntity.getCourseName();
+        String description = savedCourseEntity.getDescription();
+        String courseNameDto = updatedCourseDto.courseName();
+        String descriptionDto = updatedCourseDto.description();
 
-        assertSame(result, outCourseDTO);
-        assertEquals(result.id(), savedCourseEntity.getId());
+        assertSame(updatedCourseDto, result);
+        assertNotSame(courseNameDto, courseName);
+        assertNotSame(descriptionDto, description);
+        assertEquals(savedCourseEntity.getId(), result.id());
     }
 
     @Test

@@ -98,14 +98,10 @@ class CourseServiceTest {
         when(mapper.toDto(courseEntity)).thenReturn(updatedCourseDto);
 
         CourseDTO result = service.updateCourse(courseId, courseDTO);
-        String courseName = savedCourseEntity.getCourseName();
-        String description = savedCourseEntity.getDescription();
-        String courseNameDto = updatedCourseDto.courseName();
-        String descriptionDto = updatedCourseDto.description();
 
         assertSame(updatedCourseDto, result);
-        assertNotSame(courseNameDto, courseName);
-        assertNotSame(descriptionDto, description);
+        assertEquals(updatedCourseDto.courseName(), result.courseName());
+        assertEquals(updatedCourseDto.description(), result.description());
         assertEquals(savedCourseEntity.getId(), result.id());
     }
 

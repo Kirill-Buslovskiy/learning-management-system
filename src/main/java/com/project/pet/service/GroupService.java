@@ -36,11 +36,11 @@ public class GroupService {
     @Transactional
     public GroupDTO addGroup(GroupDTO groupDTO) {
 
-        GroupEntity entity = groupMapper.toEntity(groupDTO);
+        GroupEntity groupEntity = groupMapper.toEntity(groupDTO);
 
-        groupRepo.save(entity);
+        GroupEntity savedGroup = groupRepo.save(groupEntity);
 
-        return groupMapper.toDto(entity);
+        return groupMapper.toDto(savedGroup);
 
     }
 
@@ -51,8 +51,8 @@ public class GroupService {
 
         group.setGroupName(groupDTO.groupName());
 
-        groupRepo.save(group);
-        return groupMapper.toDto(group);
+        GroupEntity savedGroup = groupRepo.save(group);
+        return groupMapper.toDto(savedGroup);
     }
 
     @Transactional

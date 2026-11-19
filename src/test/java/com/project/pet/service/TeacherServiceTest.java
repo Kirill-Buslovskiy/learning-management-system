@@ -109,7 +109,7 @@ class TeacherServiceTest {
         scheduleEntity1.setDateEndLesson(LocalDateTime.of(2026, 11, 22, 23, 38, 0, 0));
 
         scheduleDto = new ScheduleDTO(scheduleId, null, null, scheduleEntity.getDateStartLesson(), scheduleEntity.getDateEndLesson());
-        scheduleDto = new ScheduleDTO(scheduleId1, null, null, scheduleEntity1.getDateStartLesson(), scheduleEntity1.getDateEndLesson());
+        scheduleDto1 = new ScheduleDTO(scheduleId1, null, null, scheduleEntity1.getDateStartLesson(), scheduleEntity1.getDateEndLesson());
 
     }
 

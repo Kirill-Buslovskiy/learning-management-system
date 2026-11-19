@@ -21,11 +21,11 @@ public class StudentService {
     @Transactional
     public StudentDTO addStudent(StudentDTO studentDto) {
 
-        StudentEntity entity = studentMapper.toEntity(studentDto);
+        StudentEntity studentEntity = studentMapper.toEntity(studentDto);
 
-        studentRepo.save(entity);
+        StudentEntity savedStudent = studentRepo.save(studentEntity);
 
-        return studentMapper.toDto(entity);
+        return studentMapper.toDto(savedStudent);
     }
 
     @Transactional
@@ -36,8 +36,8 @@ public class StudentService {
         student.setStudentName(studentDto.studentName());
         student.setStudentSurname(studentDto.studentSurname());
 
-        studentRepo.save(student);
-        return studentMapper.toDto(student);
+        StudentEntity savedEntity = studentRepo.save(student);
+        return studentMapper.toDto(savedEntity);
     }
 
     @Transactional

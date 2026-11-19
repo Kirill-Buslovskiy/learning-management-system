@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 8-add-foreign-keys
+      author: Kirill Buslovskii
+
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: students_in_group
+            baseColumnNames: group_id
+            referencedTableName: student
+            referencedColumnNames: id
+            constraintName: fk_students_in_group
+
+        - addForeignKeyConstraint:
+            baseTableName: groups_in_courses
+            baseColumnNames: course_id
+            referencedTableName: course
+            referencedColumnNames: id
+            constraintName: fk_groups-in-courses_course
+
+        - addForeignKeyConstraint:
+            baseTableName: groups_in_courses
+            baseColumnNames: group_id
+            referencedTableName: group
+            referencedColumnNames: id
+            constraintName: fk_groups-in-courses_group
+
+        - addForeignKeyConstraint:
+            baseTableName: schedule
+            baseColumnNames: group_id
+            referencedTableName: group
+            referencedColumnNames: id
+            constraintName: fk_schedules_group

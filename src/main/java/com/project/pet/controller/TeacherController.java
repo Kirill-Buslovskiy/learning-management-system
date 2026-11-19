@@ -1,6 +1,5 @@
 package com.project.pet.controller;
 
-import com.project.pet.dto.course.CourseDTO;
 import com.project.pet.dto.schedule.ScheduleDTO;
 import com.project.pet.dto.teacher.TeacherDTO;
 import com.project.pet.service.TeacherService;
@@ -43,9 +42,9 @@ public class TeacherController {
 
     @PostMapping("/teachers/{teacherId}/course/{courseId}")
     @Operation(summary = "Add teacher with id to course by id")
-    public CourseDTO addTeacherToCourse(@PathVariable @Parameter(name = "teacherId") UUID teacherId,
-                                        @PathVariable @Parameter(name = "courseId") UUID courseId) {
-        return teacherService.addTeacherToCourse(teacherId, courseId);
+    public void addTeacherToCourse(@PathVariable @Parameter(name = "teacherId") UUID teacherId,
+                                   @PathVariable @Parameter(name = "courseId") UUID courseId) {
+        teacherService.addTeacherToCourse(teacherId, courseId);
     }
 
     @GetMapping("/schedule/{id}")

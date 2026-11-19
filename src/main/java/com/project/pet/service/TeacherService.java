@@ -1,6 +1,5 @@
 package com.project.pet.service;
 
-import com.project.pet.dto.course.CourseDTO;
 import com.project.pet.dto.schedule.ScheduleDTO;
 import com.project.pet.dto.teacher.TeacherDTO;
 import com.project.pet.entity.course.CourseEntity;
@@ -52,8 +51,8 @@ public class TeacherService {
         teacher.setFirstName(teacherDTO.firstName());
         teacher.setSurname(teacherDTO.surname());
 
-        teacherRepo.save(teacher);
-        return teacherMapper.toDto(teacher);
+        TeacherEntity savedTeacherEntity = teacherRepo.save(teacher);
+        return teacherMapper.toDto(savedTeacherEntity);
     }
 
     @Transactional
@@ -62,7 +61,7 @@ public class TeacherService {
     }
 
     @Transactional
-    public CourseDTO addTeacherToCourse(UUID teacherId, UUID courseId) {
+    public void addTeacherToCourse(UUID teacherId, UUID courseId) {
 
         TeacherEntity teacher = teacherRepo.findById(teacherId)
                 .orElseThrow(() -> new TeacherNotFoundException("Teacher with id: %s not found".formatted(teacherId)));
@@ -73,8 +72,6 @@ public class TeacherService {
 
         teacherRepo.save(teacher);
         courseRepo.save(course);
-
-        return courseMapper.toDto(course);
     }
 
     @Transactional
